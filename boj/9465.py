@@ -7,6 +7,26 @@
 d[0][i]: (0, 0)부터 (0, i)까지의 최대합 (i < n)
 """
 
+# sol v1.1  가독성 개선
+import sys
+
+for _ in range(int(sys.stdin.readline().rstrip())):
+    n = int(sys.stdin.readline().rstrip())
+    arr = [list(map(int, sys.stdin.readline().rstrip().split())) for _ in range(2)]
+    d = [[0] * n, [0] * n]
+
+    d[0][0] = arr[0][0]
+    d[1][0] = arr[1][0]
+    d[0][1] = d[1][0] + arr[0][1]
+    d[1][1] = d[0][0] + arr[1][1]
+
+    for i in range(2, n):
+        d[0][i] = arr[0][i] + max(d[1][i-1], d[1][i-2])
+        d[1][i] = arr[1][i] + max(d[0][i-1], d[0][i-2])
+    
+    print(max(d[0][-1], d[1][-1]))
+    
+# sol v1.0
 import sys
 
 for _ in range(int(sys.stdin.readline().rstrip())):
